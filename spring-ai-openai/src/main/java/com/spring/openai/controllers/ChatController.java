@@ -1,7 +1,7 @@
 package com.spring.openai.controllers;
 
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,18 +12,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class ChatController {
 
-    @Autowired
-    private ChatClient chatClient;
+    private final ChatClient chatClient;
 
-    public ChatController(ChatClient.Builder builder) {
-        this.chatClient=builder.build();
+    //    public ChatController(ChatClient.Builder builder) {
+//        this.chatClient=builder.build();
+//    }
+
+    public ChatController(ChatModel chatModel) {
+
+        System.out.println(chatModel.getClass().getName());
+
+        this.chatClient = ChatClient
+                .builder(chatModel)
+                .build();
     }
 
     @GetMapping("/chat")
     public ResponseEntity<String> chat(
             @RequestParam(value = "q", required = true) String q
     ) {
-        var resultResponse = chatClient.prompt(q).call().content();
+
+        String resultResponse = chatClient
+                .prompt()
+                .user(q)
+                .call()
+                .content();
+
         return ResponseEntity.ok(resultResponse);
     }
 }
+
