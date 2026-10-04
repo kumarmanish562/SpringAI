@@ -7,3 +7,9 @@ spring:
       base-url: http://localhost:11434
       chat:
         model: openchat:latest
+
+
+logging:
+  level:
+    org.springframework.ai:
+      char.client: DEBUG
