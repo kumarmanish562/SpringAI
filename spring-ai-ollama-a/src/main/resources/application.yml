@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: spring-ai-ollama-a
+
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+      chat:
+        model: openchat:latest
