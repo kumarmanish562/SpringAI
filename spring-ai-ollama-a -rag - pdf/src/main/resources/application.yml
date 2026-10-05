@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: spring-ai-ollama-a
+
+  datasource:
+    url: jdbc:postgresql://localhost:5434/vector_db
+    username: postgres
+    password: 0328
+
+  ai:
+    ollama:
+      base-url: http://localhost:11434
+
+      chat:
+        model: openchat:latest
+
+      embedding:
+        options:
+          model: nomic-embed-text
+
+    vectorstore:
+      pgvector:
+        initialize-schema: true
+
+logging:
+  level:
+    org.springframework.ai.chat.client: DEBUG
